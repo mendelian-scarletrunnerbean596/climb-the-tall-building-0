@@ -41,6 +41,7 @@ interface GameState {
   map: MapNode[];
   currentNodeId: string | null;
   currentRow: number;
+  currentEventId: string | null;
 
   // Rewards
   rewardCardIds: string[];
@@ -72,6 +73,7 @@ interface GameState {
   addFloatingText: (text: string, x: number, y: number, color: string) => void;
   tick: (dt: number) => void;
   returnToMainMenu: () => void;
+  applyEventOutcome: (outcome: { hp?: number; maxHp?: number; gold?: number; upgradeRandom?: boolean }) => void;
 }
 
 function calcDamage(base: number, attacker: StatusEffects, defender: StatusEffects): number {
@@ -134,6 +136,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   map: [],
   currentNodeId: null,
   currentRow: -1,
+  currentEventId: null,
   rewardCardIds: [],
   floatingTexts: [],
   screenShake: 0,
@@ -163,6 +166,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       map,
       currentNodeId: null,
       currentRow: -1,
+      currentEventId: null,
       rewardCardIds: [],
       floatingTexts: [],
       screenShake: 0,
@@ -212,15 +216,9 @@ export const useGameStore = create<GameState>((set, get) => ({
         set({ phase: 'rest' });
         break;
       case 'event':
-        // Events: random heal or gold
-        set(s => ({
-          player: {
-            ...s.player,
-            hp: Math.min(s.player.maxHp, s.player.hp + 15),
-            gold: s.player.gold + 25,
-          },
-          phase: 'event',
-        }));
+        const eventIds = ['shrine', 'cleric', 'thieves', 'golden_idol', 'upgrade_shrine'];
+        const randomEventId = eventIds[Math.floor(Math.random() * eventIds.length)];
+        set({ phase: 'event', currentEventId: randomEventId });
         break;
       case 'shop':
         // Simplified: give gold and go back to map
@@ -579,6 +577,33 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       phase: 'main_menu',
       previousPhase: null,
+    });
+  },
+
+  applyEventOutcome: (outcome) => {
+    set(s => {
+      let player = { ...s.player };
+      let deck = [...s.deck];
+
+      if (outcome.hp) {
+        player.hp = Math.max(1, Math.min(player.maxHp, player.hp + outcome.hp));
+      }
+      if (outcome.maxHp) {
+        player.maxHp += outcome.maxHp;
+        player.hp += outcome.maxHp;
+      }
+      if (outcome.gold) {
+        player.gold = Math.max(0, player.gold + outcome.gold);
+      }
+      if (outcome.upgradeRandom) {
+        const upgradable = deck.filter(c => !c.upgraded);
+        if (upgradable.length > 0) {
+          const target = upgradable[Math.floor(Math.random() * upgradable.length)];
+          deck = deck.map(c => c.uid === target.uid ? { ...c, upgraded: true } : c);
+        }
+      }
+
+      return { player, deck };
     });
   },
 }));

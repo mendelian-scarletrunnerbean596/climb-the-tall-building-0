@@ -27,6 +27,7 @@ export function MainMenu() {
   const startRun = useGameStore(s => s.startRun);
   const [showTitle, setShowTitle] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setShowTitle(true), 200);
@@ -81,11 +82,51 @@ export function MainMenu() {
           Start Run
         </button>
 
-        <button className="btn-secondary flex items-center gap-2">
+        <button onClick={() => setShowHowToPlay(true)} className="btn-secondary flex items-center gap-2">
           <BookOpen size={16} />
           How to Play
         </button>
       </div>
+
+      {/* How to Play Modal */}
+      {showHowToPlay && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 fade-in p-8">
+          <div className="bg-[#111118] border border-amber-500/30 rounded-2xl p-8 max-w-2xl w-full shadow-2xl relative">
+            <h2 className="font-cinzel text-3xl font-bold text-amber-500 mb-6 border-b border-amber-500/20 pb-4">How to Play</h2>
+            
+            <div className="space-y-4 text-white/80 text-sm leading-relaxed mb-8 h-96 overflow-y-auto pr-4">
+              <p><strong className="text-amber-400">Combat:</strong> Defeat enemies by reducing their HP to 0. You have 3 Energy per turn to play cards from your hand.</p>
+              
+              <p><strong className="text-amber-400">Cards:</strong></p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><span className="text-red-400">Attacks (Red):</span> Deal damage to enemies. Select single-target attacks, then click an enemy.</li>
+                <li><span className="text-blue-400">Skills (Blue):</span> Grant block or other utility. Block mitigates incoming damage but resets at the start of your turn.</li>
+                <li><span className="text-purple-400">Powers (Purple):</span> Grant permanent buffs for the rest of combat.</li>
+              </ul>
+
+              <p><strong className="text-amber-400">Status Effects:</strong></p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><span className="text-purple-400">Vulnerable:</span> Take 50% more damage from attacks.</li>
+                <li><span className="text-emerald-400">Weak:</span> Deal 25% less damage with attacks.</li>
+                <li><span className="text-red-500">Strength:</span> Adds flat damage to all attacks.</li>
+              </ul>
+
+              <p><strong className="text-amber-400">Map Nodes:</strong></p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>⚔️ <strong className="text-white">Combat:</strong> Standard battles.</li>
+                <li>💀 <strong className="text-red-400">Elite:</strong> Tough battles for better rewards.</li>
+                <li>🔥 <strong className="text-orange-400">Campfire:</strong> Heal HP or Upgrade a card from your deck.</li>
+                <li>❓ <strong className="text-blue-400">Event:</strong> Random interactive text events with choices.</li>
+                <li>👿 <strong className="text-red-600">Boss:</strong> The final challenge of the Act.</li>
+              </ul>
+            </div>
+
+            <button onClick={() => setShowHowToPlay(false)} className="btn-primary w-full">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <div className="absolute bottom-6 flex flex-col items-center gap-2">
